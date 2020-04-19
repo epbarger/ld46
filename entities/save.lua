@@ -14,6 +14,13 @@ function Save:init()
     if results[1] == saveVersion then
       s = results[2]
       self.highscore = s.highscore
+      self.crt = s.crt
+      self.fullscreen = s.fullscreen
+
+      if love.window.getFullscreen() ~= s.fullscreen then
+        love.window.setFullscreen(not love.window.getFullscreen())
+        CScreen.update(w, h)
+      end
     else
       self:newSave()
     end
@@ -26,7 +33,9 @@ function Save:writeOut()
   local content = Binser.serialize(
     saveVersion,
     {
-      highscore=self.highscore
+      highscore=self.highscore,
+      crt=self.crt,
+      fullscreen=self.fullscreen
     }
   )
   local success, message = love.filesystem.write("save.bin", content)
@@ -34,6 +43,8 @@ end
 
 function Save:newSave()
   self.highscore = 0
+  self.crt = true
+  self.fullscreen = true
 end
 
 function Save:updateHighscore(score)

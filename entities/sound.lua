@@ -1,5 +1,6 @@
 local Sound = Class{}
 
+
 jetpack = love.audio.newSource("sounds/jetpack.ogg", "static")
 jetpack:setLooping(true)
 enemyDeath = love.audio.newSource("sounds/bfxr2.wav", "static")

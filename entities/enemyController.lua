@@ -8,7 +8,7 @@ function EnemyController:init()
     self:spawnEnemy()
   end)
 
-  -- for i = 1, 10 do self:spawnEnemy() end
+  for i = 1, 8 do self:spawnEnemy() end
 end
 
 function EnemyController:update(dt)

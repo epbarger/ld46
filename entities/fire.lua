@@ -37,7 +37,12 @@ function Fire:draw(map)
         else
           map:insertIntoColorBuffer(self.x+i, self.y+j, {r,g,b,a}) --
         end
-        map:insertIntoHeightMap(self.x+i, self.y+j, (h*255*self.scale), true)
+
+        if i >= 2 and i <= 7 and j >= 2 and j <= 7 then
+          map:insertIntoHeightMap(self.x+i, self.y+j, (h*255+love.math.random(0, 10))*self.scale, true)
+        else
+          map:insertIntoHeightMap(self.x+i, self.y+j, (h*255*self.scale), true)
+        end
       end
     end
   end

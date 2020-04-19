@@ -4,6 +4,7 @@ CScreen = require 'libs.cscreen.cscreen'
 inspect = require 'libs.inspect.inspect'
 Vector = require 'libs.hump.vector'
 Timer = require 'libs.hump.timer'
+Moonshine = require 'libs.moonshine'
 
 w, h = 480, 320
 
@@ -11,7 +12,6 @@ love.event.pump()
 love.mouse.setRelativeMode(true)
 love.mouse.setVisible(false)
 love.event.pump()
-love.window.setFullscreen(true)
 
 function colorBuilder(r, g, b, a)
   return { r/255, g/255, b/255, (a or 255)/255 }
@@ -43,8 +43,17 @@ function love.keypressed(key)
   if key == "escape" then
     love.event.push("quit")
   elseif key == "1" then
-    love.window.setFullscreen(not love.window.getFullscreen())
+    local newFS = not love.window.getFullscreen()
+    love.window.setFullscreen(newFS)
     CScreen.update(w, h)
+    initEffect()
+    save.fullscreen = newFS
+    save:writeOut()
+  elseif key == "2" then
+    if love.window.getFullscreen() then
+      save.crt = not save.crt
+      save:writeOut()
+    end
   end
 end
 

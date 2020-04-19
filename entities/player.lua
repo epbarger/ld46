@@ -264,7 +264,7 @@ function Player:mousePressed(x, y, button)
 
     if button == 1 then
       for i, enemy in ipairs(map.enemies) do
-        if not enemy.destroyed and (distanceBetweenPoints(player.x, player.y, enemy.x, enemy.y) < 18) then
+        if not enemy.destroyed and (distanceBetweenPoints(player.x, player.y, enemy.x, enemy.y) < 20) then
           self:incrementScore()
           enemy:destroy()
           sound:playEnemyDeath()
@@ -273,7 +273,7 @@ function Player:mousePressed(x, y, button)
 
     elseif button == 2 then
       for i, tree in ipairs(map.trees) do
-        if not tree.burned and distanceBetweenPoints(player.x, player.y, tree.x, tree.y) < 22 then
+        if not tree.burned and distanceBetweenPoints(player.x, player.y, tree.x, tree.y) < 24 then
           map:convertTreeToFire(i)
           self.campfireCount = self.campfireCount + 1
           self:endMultiplier(false)

@@ -58,8 +58,29 @@ function game:update(dt)
   end
 end
 
+function initEffect() 
+  love.graphics.setColor(1,1,1)
+  effect = Moonshine(Moonshine.effects.chromasep).
+          chain(Moonshine.effects.fastgaussianblur)
+  effect.parameters = {
+    chromasep = { radius = 3 },
+  }
+end
+initEffect()
 function game:draw()
-  CScreen.apply()
+  love.graphics.setColor(1,1,1)
+  fs = love.window.getFullscreen()
+  if fs and save.crt then
+    effect(function()
+      self:actualDraw(fs and save.crt)
+    end)
+  else
+    self:actualDraw(false)
+  end
+end
+
+function game:actualDraw(fs)
+  CScreen.apply(fs)
 
   map:drawBG()
   snowBG:draw()

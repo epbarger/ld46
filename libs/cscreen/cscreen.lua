@@ -58,9 +58,11 @@ function CScreen.getScale()
 end
 
 -- Scales and centers all graphics properly
-function CScreen.apply()
+function CScreen.apply(fullscreen)
   if ctr then
-    love.graphics.translate(tx, ty)
+    local txx = tx
+    if fullscreen then txx = txx/5 end
+    love.graphics.translate(txx, ty)
   end
   love.graphics.scale(fsv, fsv)
 end

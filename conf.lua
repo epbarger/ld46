@@ -7,7 +7,7 @@ function love.conf(t)
   t.window.vsync = 0
   t.window.fullscreen = false
   t.window.msaa = 0
-  t.identity = "CorruptTundra"
+  t.identity = "CorruptTundra2"
   t.audio.mixwithsystem = false
   t.window.title = "CORRUPT TUNDRA"
 
