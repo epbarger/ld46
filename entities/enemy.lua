@@ -8,12 +8,13 @@ function Enemy:init(x, y, speed)
   love.graphics.clear(15/255,0,0,1)
   love.graphics.setCanvas()
   self.heightMap = self.heightMap:newImageData()
-  self.scale = 1
+  self.scale = {1}
 
   self.iMax, self.jMax = self.heightMap:getDimensions()
 
   self.speed = speed or 16
   self.destroyed = false
+  self.colors = corruptionColors
 end
 
 function Enemy:update(dt)
@@ -40,13 +41,13 @@ corruptionColors = {
   { 0.7, 0.7, 0.9}
 }
 function Enemy:draw(map)
-  if not self.destroyed then
+  if self.scale[1] > 0 then
     for i = 0, self.iMax-1 do
       for j = 0, self.jMax-1 do
         local h, g, b, a = self.heightMap:getPixel(i, j)
         if h > 0 then
-          map:insertIntoColorBuffer(self.x+i, self.y+j, corruptionColors[love.math.random(1, #corruptionColors)])
-          map:insertIntoHeightMap(self.x+i, self.y+j, ((h*255) + love.math.random(0, 10) - 5)*self.scale, true)
+          map:insertIntoColorBuffer(self.x+i, self.y+j, self.colors[love.math.random(1, #self.colors)])
+          map:insertIntoHeightMap(self.x+i, self.y+j, ((h*255) + love.math.random(0, 10) - 5)*self.scale[1], true)
         end
       end
     end
@@ -55,7 +56,8 @@ end
 
 function Enemy:destroy()
   self.destroyed = true
-  self.scale = 0
+  self.colors = fireColors
+  Timer.tween(0.35, self.scale, {0}, 'out-quart')
 end
 
 return Enemy

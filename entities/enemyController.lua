@@ -3,7 +3,7 @@ local EnemyController = Class{}
 local Enemy = require('entities.enemy')
 
 function EnemyController:init()
-  self.timeUntilSpawn = 3
+  self.timeUntilSpawn = 4
   Timer.every(self.timeUntilSpawn, function()
     self:spawnEnemy()
   end)
