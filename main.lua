@@ -39,21 +39,25 @@ function love.load()
   Gamestate.switch(game)
 end
 
+screenshots = 0
 function love.keypressed(key)
   if key == "escape" then
     love.event.push("quit")
   elseif key == "1" then
     local newFS = not love.window.getFullscreen()
     love.window.setFullscreen(newFS)
-    CScreen.update(w, h)
+    CScreen.update(w*2, h*2)
     initEffect()
     save.fullscreen = newFS
     save:writeOut()
   elseif key == "2" then
     if love.window.getFullscreen() then
-      save.crt = not save.crt
+      save.effect = not save.effect
       save:writeOut()
     end
+  elseif key == "3" then
+    love.graphics.captureScreenshot("screenshot"..screenshots..".png")
+    screenshots = screenshots + 1
   end
 end
 

@@ -1,6 +1,6 @@
 local Save = Class{}
 
-saveVersion = 1
+saveVersion = 2
 
 local Binser = require 'libs.binser.binser'
 
@@ -14,7 +14,7 @@ function Save:init()
     if results[1] == saveVersion then
       s = results[2]
       self.highscore = s.highscore
-      self.crt = s.crt
+      self.effect = s.effect
       self.fullscreen = s.fullscreen
 
       if love.window.getFullscreen() ~= s.fullscreen then
@@ -34,7 +34,7 @@ function Save:writeOut()
     saveVersion,
     {
       highscore=self.highscore,
-      crt=self.crt,
+      effect=self.effect,
       fullscreen=self.fullscreen
     }
   )
@@ -43,7 +43,7 @@ end
 
 function Save:newSave()
   self.highscore = 0
-  self.crt = true
+  self.effect = true
   self.fullscreen = true
 end
 

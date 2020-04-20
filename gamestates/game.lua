@@ -67,12 +67,13 @@ function initEffect()
   }
 end
 initEffect()
+
 function game:draw()
   love.graphics.setColor(1,1,1)
   fs = love.window.getFullscreen()
-  if fs and save.crt then
+  if fs and save.effect then
     effect(function()
-      self:actualDraw(fs and save.crt)
+      self:actualDraw(true)
     end)
   else
     self:actualDraw(false)
