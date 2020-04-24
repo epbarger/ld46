@@ -173,6 +173,9 @@ function Map:colorAt(x, y)
 end
 
 function Map:insertIntoHeightMap(x, y, red, ontop)
+  if x < 0 or x >= self.width then return end
+  if y < 0 or y >= self.height then return end
+
   ontop = ontop or false
   if ontop then
     redHeight, g, b, a = self.heightMap:getPixel(x, y)

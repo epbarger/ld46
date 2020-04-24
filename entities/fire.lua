@@ -7,6 +7,8 @@ function Fire:init(x, y)
   self.heightMap = love.image.newImageData('textures/fire2.png')
   self.colorMap = love.image.newImageData('textures/fire2c.png')
   self.iMax, self.jMax = self.heightMap:getDimensions()
+  self.iShift = math.floor(self.iMax / 2)
+  self.jShift = math.floor(self.jMax / 2)
   self.corrupted = false
 end
 
@@ -32,16 +34,18 @@ function Fire:draw(map)
       local h, g, b, a = self.heightMap:getPixel(i, j)
       local r, g, b, a = self.colorMap:getPixel(i, j)
       if h > 0 then
+        local x = self.x+i-self.iShift
+        local y = self.y+j-self.jShift
         if r > 0.99 and g > 0.99 and b > 0.99 then
-          map:insertIntoColorBuffer(self.x+i, self.y+j, self:color())
+          map:insertIntoColorBuffer(x, y, self:color())
         else
-          map:insertIntoColorBuffer(self.x+i, self.y+j, {r,g,b,a}) --
+          map:insertIntoColorBuffer(x, y, {r,g,b,a}) --
         end
 
         if i >= 2 and i <= 7 and j >= 2 and j <= 7 then
-          map:insertIntoHeightMap(self.x+i, self.y+j, (h*255+love.math.random(0, 10))*self.scale, true)
+          map:insertIntoHeightMap(x, y, (h*255+love.math.random(0, 10))*self.scale, true)
         else
-          map:insertIntoHeightMap(self.x+i, self.y+j, (h*255*self.scale), true)
+          map:insertIntoHeightMap(x, y, (h*255*self.scale), true)
         end
       end
     end

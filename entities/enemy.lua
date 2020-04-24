@@ -11,6 +11,8 @@ function Enemy:init(x, y, speed)
   self.scale = {1}
 
   self.iMax, self.jMax = self.heightMap:getDimensions()
+  self.iShift = math.floor(self.iMax / 2)
+  self.jShift = math.floor(self.jMax / 2)
 
   self.speed = speed or 16
   self.destroyed = false
@@ -46,8 +48,8 @@ function Enemy:draw(map)
       for j = 0, self.jMax-1 do
         local h, g, b, a = self.heightMap:getPixel(i, j)
         if h > 0 then
-          map:insertIntoColorBuffer(self.x+i, self.y+j, self.colors[love.math.random(1, #self.colors)])
-          map:insertIntoHeightMap(self.x+i, self.y+j, ((h*255) + love.math.random(0, 10) - 5)*self.scale[1], true)
+          map:insertIntoColorBuffer(self.x+i-self.iShift, self.y+j-self.jShift, self.colors[love.math.random(1, #self.colors)])
+          map:insertIntoHeightMap(self.x+i-self.iShift, self.y+j-self.jShift, ((h*255) + love.math.random(0, 10) - 5)*self.scale[1], true)
         end
       end
     end
