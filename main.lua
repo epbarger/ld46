@@ -58,6 +58,8 @@ function love.keypressed(key)
   elseif key == "3" then
     love.graphics.captureScreenshot("screenshot"..screenshots..".png")
     screenshots = screenshots + 1
+  elseif key == "`" then
+    dev = not dev
   end
 end
 

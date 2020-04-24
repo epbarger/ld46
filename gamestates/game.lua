@@ -12,6 +12,8 @@ local GameOver = require 'entities.gameOver'
 local Save = require 'entities.save'
 local Sound = require 'entities.sound'
 
+dev = false
+
 black = {0,0,0,1}
 white = {1,1,1,1}
 
@@ -99,11 +101,11 @@ function game:actualDraw(fs)
     gameOver:draw()
   end
 
-  -- love.graphics.setFont(defaultFont)
-  -- love.graphics.setColor(0,0,0)
-  -- love.graphics.rectangle("fill", w/2-1, h/2-1, 2, 2)
-  -- love.graphics.print(tostring(love.timer.getFPS( )), w/2, 10)
-  -- love.graphics.print(''..math.floor(player.x)..', '..math.floor(player.y)..', '..math.floor(player.height), w/2, 22)
+  if dev then
+    love.graphics.setColor(0,0,0)
+    -- love.graphics.rectangle("fill", w/2-1, h/2-1, 2, 2)
+    love.graphics.print(''..love.timer.getFPS( )..','..math.floor(player.x)..','..math.floor(player.y)..','..math.floor(player.height), 10, h-30)
+  end
 
   CScreen.cease()
 end
