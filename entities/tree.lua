@@ -6,6 +6,9 @@ function Tree:init(x, y)
 
   self.heightMap = love.image.newImageData('textures/tree3.png')
   self.iMax, self.jMax = self.heightMap:getDimensions()
+  self.iShift = math.floor(self.iMax / 2)
+  self.jShift = math.floor(self.jMax / 2)
+
   self.burned = false
 end
 
@@ -23,8 +26,8 @@ function Tree:draw(map)
       for j = 0, self.jMax-1 do
         local h, g, b, a = self.heightMap:getPixel(i, j)
         if h > 0 then
-          map:insertIntoColorBuffer(self.x+i, self.y+j, color)
-          map:insertIntoHeightMap(self.x+i, self.y+j, (h*255*self.scale), true)
+          map:insertIntoColorBuffer(self.x+i-self.iShift, self.y+j-self.jShift, color)
+          map:insertIntoHeightMap(self.x+i-self.iShift, self.y+j-self.jShift, (h*255*self.scale), true)
         end
       end
     end
