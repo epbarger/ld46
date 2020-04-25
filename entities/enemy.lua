@@ -17,6 +17,14 @@ function Enemy:init(x, y, speed)
   self.speed = speed or 16
   self.destroyed = false
   self.colors = corruptionColors
+
+  self.random = love.math.newRandomGenerator(love.math.random() * 100000000)
+  self.randomState = self.random:getState()
+
+  Timer.every(1/20, function()
+    self.random:setSeed(love.math.random() * 100000000)
+    self.randomState = self.random:getState()
+  end)
 end
 
 function Enemy:update(dt)
@@ -43,13 +51,15 @@ corruptionColors = {
   { 0.7, 0.7, 0.9}
 }
 function Enemy:draw(map)
+  self.random:setState(self.randomState)
+
   if self.scale[1] > 0 then
     for i = 0, self.iMax-1 do
       for j = 0, self.jMax-1 do
         local h, g, b, a = self.heightMap:getPixel(i, j)
         if h > 0 then
-          map:insertIntoColorBuffer(self.x+i-self.iShift, self.y+j-self.jShift, self.colors[love.math.random(1, #self.colors)])
-          map:insertIntoHeightMap(self.x+i-self.iShift, self.y+j-self.jShift, ((h*255) + love.math.random(0, 10) - 5)*self.scale[1], true)
+          map:insertIntoColorBuffer(self.x+i-self.iShift, self.y+j-self.jShift, self.colors[self.random:random(1, #self.colors)])
+          map:insertIntoHeightMap(self.x+i-self.iShift, self.y+j-self.jShift, ((h*255) + self.random:random(0, 10) - 5)*self.scale[1], true)
         end
       end
     end

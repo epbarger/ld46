@@ -10,6 +10,14 @@ function Fire:init(x, y)
   self.iShift = math.floor(self.iMax / 2)
   self.jShift = math.floor(self.jMax / 2)
   self.corrupted = false
+
+  self.random = love.math.newRandomGenerator(love.math.random() * 100000000)
+  self.randomState = self.random:getState()
+
+  Timer.every(1/20, function()
+    self.random:setSeed(love.math.random() * 100000000)
+    self.randomState = self.random:getState()
+  end)
 end
 
 function Fire:update(dt)
@@ -25,6 +33,8 @@ fireColors = {
 }
 
 function Fire:draw(map)
+  self.random:setState(self.randomState)
+
   if not self.originHeight then
     self.originHeight = map:maxHeightOfBox(self.x-self.iMax, self.y-self.jMax, self.iMax, self.jMax)
   end
@@ -43,7 +53,7 @@ function Fire:draw(map)
         end
 
         if i >= 2 and i <= 7 and j >= 2 and j <= 7 then
-          map:insertIntoHeightMap(x, y, (h*255+love.math.random(0, 10))*self.scale, true)
+          map:insertIntoHeightMap(x, y, (h*255+self.random:random(0, 10))*self.scale, true)
         else
           map:insertIntoHeightMap(x, y, (h*255*self.scale), true)
         end
@@ -54,9 +64,9 @@ end
 
 function Fire:color()
   if self.corrupted then
-    return corruptionColors[love.math.random(1, #corruptionColors)]
+    return corruptionColors[self.random:random(1, #corruptionColors)]
   else
-    return fireColors[love.math.random(1, #fireColors)]
+    return fireColors[self.random:random(1, #fireColors)]
   end
 end
 
