@@ -4,6 +4,8 @@ local Sound = Class{}
 jetpack = love.audio.newSource("sounds/jetpack.ogg", "static")
 jetpack:setLooping(true)
 enemyDeath = love.audio.newSource("sounds/bfxr2.wav", "static")
+enemyDeathCopy = enemyDeath:clone()
+
 ignite = love.audio.newSource("sounds/bfxr3.wav", "static"); ignite:setVolume(0.6); ignite:setPitch(0.8)
 comboLost = love.audio.newSource("sounds/combolost.ogg", "static")
 warning = love.audio.newSource("sounds/warning.ogg", "static")
@@ -29,13 +31,19 @@ function Sound:stopJetpack()
 end
 
 function Sound:playEnemyDeath()
-  enemyDeath:setPitch(1 - 0.125 + love.math.random()/4)
-  enemyDeath:play()
+  sample = enemyDeath
+  if sample:isPlaying() then
+    sample = enemyDeathCopy
+  end
+
+  sample:setPitch(1 - 0.125 + love.math.random()/4)
+  sample:play()
 end
 
 function Sound:playGameOver()
   self:stopJetpack()
   self:stopWarning()
+  self:stopWalking()
   gameOver:play()
 end
 
