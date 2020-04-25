@@ -20,20 +20,21 @@ function EnemyController:spawnEnemy()
   local newY = nil
 
   while not positionDetermined do
-    local breakWhile = false
+    local tryAgain = false
     newX = love.math.random(0, map.width)
     newY = love.math.random(0, map.height)
 
     if not (distanceBetweenPoints(newX, newY, map.fire.x, map.fire.y) < 200) then
       for i, enemy in ipairs(map.enemies) do
         if not enemy.destroyed and (distanceBetweenPoints(newX, newY, enemy.x, enemy.y) < 20) then
-          breakWhile = true
+          tryAgain = true
           break
         end
       end
 
-      if breakWhile then break end
-      positionDetermined = true 
+      if not tryAgain then
+        positionDetermined = true
+      end
     end
   end
 
