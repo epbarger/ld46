@@ -92,21 +92,21 @@ function Player:update(dt)
     end
 
     local accel = {x=0, y=0}
+    local aF = 150
     if love.keyboard.isDown("w") then
-      accel = {x=accel.x + math.sin(self.angle)*dt*-4, y=accel.y + math.cos(self.angle)*dt*-4}
+      accel = {x=accel.x + math.sin(self.angle)*-aF, y=accel.y + math.cos(self.angle)*-aF}
     elseif love.keyboard.isDown("s") then
-      accel = {x=accel.x + math.sin(self.angle)*dt*4, y=accel.y + math.cos(self.angle)*dt*4}
+      accel = {x=accel.x + math.sin(self.angle)*aF, y=accel.y + math.cos(self.angle)*aF}
     end
     if love.keyboard.isDown("a") then
-      accel = {x=accel.x + math.sin(self.angle + math.pi/2)*dt*-4, y=accel.y + math.cos(self.angle + math.pi/2)*dt*-4}
+      accel = {x=accel.x + math.sin(self.angle + math.pi/2)*-aF, y=accel.y + math.cos(self.angle + math.pi/2)*-aF}
     elseif love.keyboard.isDown("d") then
-      accel = {x=accel.x + math.sin(self.angle + math.pi/2)*dt*4, y=accel.y + math.cos(self.angle + math.pi/2)*dt*4}
+      accel = {x=accel.x + math.sin(self.angle + math.pi/2)*aF, y=accel.y + math.cos(self.angle + math.pi/2)*aF}
     end
 
-
-    self.jspeed = {x=self.jspeed.x + accel.x, y=self.jspeed.y + accel.y}
-    self.x = self.x + self.jspeed.x
-    self.y = self.y + self.jspeed.y
+    self.jspeed = {x=self.jspeed.x + accel.x * dt, y=self.jspeed.y + accel.y * dt}
+    self.x = self.x + self.jspeed.x * dt
+    self.y = self.y + self.jspeed.y * dt
     self.jspeed.x = self.jspeed.x - self.jspeed.x * dt
     self.jspeed.y = self.jspeed.y - self.jspeed.y * dt
 
@@ -125,8 +125,8 @@ function Player:update(dt)
     self.height = self.height - self.dHeight * dt
 
     if not self.jetpackLanded then
-      self.x = self.x + self.jspeed.x
-      self.y = self.y + self.jspeed.y
+      self.x = self.x + self.jspeed.x * dt
+      self.y = self.y + self.jspeed.y * dt
       self.jspeed.x = self.jspeed.x - self.jspeed.x * 0.5 * dt
       self.jspeed.y = self.jspeed.y - self.jspeed.y * 0.5 * dt
     end

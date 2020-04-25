@@ -12,7 +12,7 @@ local GameOver = require 'entities.gameOver'
 local Save = require 'entities.save'
 local Sound = require 'entities.sound'
 
-dev = false
+dev = true
 
 black = {0,0,0,1}
 white = {1,1,1,1}
@@ -58,6 +58,10 @@ function game:update(dt)
     snowFG:update(dt, player)
     snowBG:update(dt, player)
   end
+
+   --   if dt < 1/10 then
+   --    love.timer.sleep(1/10 - dt)
+   -- end
 end
 
 function initEffect() 
