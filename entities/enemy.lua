@@ -3,16 +3,12 @@ local Enemy = Class{}
 function Enemy:init(x, y, speed)
   self.x, self.y = x, y
 
-  self.heightMap = love.graphics.newCanvas(3,3)
-  love.graphics.setCanvas(self.heightMap)
-  love.graphics.clear(15/255,0,0,1)
-  love.graphics.setCanvas()
-  self.heightMap = self.heightMap:newImageData()
-  self.scale = {1}
-
+  self.heightMap = love.image.newImageData('textures/enemy.png')
   self.iMax, self.jMax = self.heightMap:getDimensions()
   self.iShift = math.floor(self.iMax / 2)
   self.jShift = math.floor(self.jMax / 2)
+
+  self.scale = {1}
 
   self.speed = speed or 16
   self.destroyed = false
@@ -59,7 +55,7 @@ function Enemy:draw(map)
         local h, g, b, a = self.heightMap:getPixel(i, j)
         if h > 0 then
           map:insertIntoColorBuffer(self.x+i-self.iShift, self.y+j-self.jShift, self.colors[self.random:random(1, #self.colors)])
-          map:insertIntoHeightMap(self.x+i-self.iShift, self.y+j-self.jShift, ((h*255) + self.random:random(0, 10) - 5)*self.scale[1], true)
+          map:insertIntoHeightMap(self.x+i-self.iShift, self.y+j-self.jShift, (25 + self.random:random(0, 10) - 5)*self.scale[1], true)
         end
       end
     end
