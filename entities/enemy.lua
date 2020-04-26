@@ -3,7 +3,7 @@ local Enemy = Class{}
 function Enemy:init(x, y, speed)
   self.x, self.y = x, y
 
-  self.heightMap = love.image.newImageData('textures/enemy.png')
+  self.heightMap = love.image.newImageData('textures/enemy2.png')
   self.iMax, self.jMax = self.heightMap:getDimensions()
   self.iShift = math.floor(self.iMax / 2)
   self.jShift = math.floor(self.jMax / 2)
